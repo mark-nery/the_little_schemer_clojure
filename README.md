@@ -1,2 +1,1 @@
-the_little_schemer_clojure
-==========================
+The little schemer exercises in clojure
