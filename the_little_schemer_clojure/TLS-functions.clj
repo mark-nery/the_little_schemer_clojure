@@ -54,3 +54,64 @@
      (null? lat) '()
      (eq? (car lat) a) (cdr lat)
      :else (cons (car lat) (rember a (cdr lat))))))
+
+(def firsts
+  (fn [l]
+    (cond
+     (null? l) '()
+     :else (cons (car (car l)) (firsts (cdr l))))))
+
+(def insertR
+  (fn [new old lat]
+    (cond
+     (null? lat) '()
+     :else
+     (cond
+      (eq? (car lat) old) (cons old (cons new (cdr lat)))
+      :else (cons (car lat) (insertR new old (cdr lat)))))))
+
+(def insertL
+  (fn [new old lat]
+    (cond
+     (null? lat) '()
+     :else
+     (cond
+      (eq? (car lat) old) (cons new lat)
+      :else (cons (car lat) (insertL new old (cdr lat)))))))
+
+(def subst
+  (fn [new old lat]
+    (cond
+     (null? lat) '()
+     :else
+     (cond
+      (eq? (car lat) old) (cons new (cdr lat))
+      :else (cons (car lat) (subst new old (cdr lat)))))))
+
+(def subst2
+  (fn [new o1 o2 lat]
+    (cond
+     (null? lat) '()
+     :else
+     (cond
+      (or (eq? (car lat) o1)(eq? (car lat) o2))
+      (cons new (cdr lat))
+      :else (cons (car lat) (subst2 new o1 o2 (cdr lat)))))))
+
+(def multirember
+  (fn [a lat]
+    (cond
+     (null? lat) '()
+     :else
+     (cond
+      (eq? (car lat) a) (multirember a (cdr lat))
+      :else (cons (car lat) (multirember a (cdr lat)))))))
+
+(def multiinsertR
+  (fn [new old lat]
+    (cond
+     (null? lat) '()
+     :else
+     (cond
+      (eq? old (car lat)) (cons old (cons new (multiinsertR new old (cdr lat))))
+      :else (cons (car lat) (multiinsertR new old (cdr lat)))))))
