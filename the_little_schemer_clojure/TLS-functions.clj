@@ -115,3 +115,55 @@
      (cond
       (eq? old (car lat)) (cons old (cons new (multiinsertR new old (cdr lat))))
       :else (cons (car lat) (multiinsertR new old (cdr lat)))))))
+
+(def multiinsertL
+  (fn [new old lat]
+    (cond
+     (null? lat) '()
+     :else
+     (cond
+      (eq? old (car lat)) (cons new (cons old (multiinsertL new old (cdr lat))))
+      :else (cons (car lat) (multiinsertL new old (cdr lat)))))))
+
+(def multisubst
+  (fn [new old lat]
+    (cond
+     (null? lat) '()
+     :else
+     (cond
+      (eq? old (car lat)) (cons new (multisubst new old (cdr lat)))
+      :else (cons (car lat) (multisubst new old (cdr lat)))))))
+
+;;; Chapter 4 functions
+(def add1
+  (fn [n]
+    (+ 1 n)))
+
+(def sub1
+  (fn [n]
+    (- n 1)))
+
+(def +
+  (fn [n m]
+    (cond
+     (zero? m) n
+     :else (add1 (+ n (sub1 m))))))
+
+(def -
+  (fn [n m]
+    (cond
+     (zero? m) n
+     :else (sub1 (- n (sub1 m))))))
+
+(def tup?
+  (fn [tup]
+    (cond
+     (null? tup) true
+     (not (number? (car tup))) false
+     :else (tup? (cdr tup)))))
+
+(def addtup
+  (fn [tup]
+    (cond
+     (null? tup) 0
+     :else (+ (car tup) (addtup (cdr tup))))))
