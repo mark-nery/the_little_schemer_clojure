@@ -21,3 +21,12 @@
 (expect (= 0 (addtup '())))
 (expect (= 1 (addtup '(1))))
 (expect (= 18 (addtup '(3 5 2 8))))
+
+(expect (= 12 (x 2 6)))
+
+(expect (= '(7 13) (tup+ '(3 7 ) '(4 6))))
+(expect (= '(7 13 8 1) (tup+ '(3 7 ) '(4 6 8 1))))
+
+(expect (= true (> 1 0)))
+(expect (= false (> 0 1)))
+(expect (= false (> 0 0)))

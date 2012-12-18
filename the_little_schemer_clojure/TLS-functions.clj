@@ -167,3 +167,38 @@
     (cond
      (null? tup) 0
      :else (+ (car tup) (addtup (cdr tup))))))
+
+(def x
+  (fn [n m]
+    (cond
+     (zero? m) 0
+     :else (+ n (x n (sub1 m))))))
+
+(def tup+
+  (fn [tup1 tup2]
+    (cond
+     (null? tup1) tup2
+     (null? tup2) tup1
+     :else (cons
+            (+ (car tup1) (car tup2))
+            (tup+ (cdr tup1) (cdr tup2))))))
+
+(def >
+  (fn [n m]
+    (cond
+     (zero? n) false
+     (zero? m) true
+     :else (> (sub1 n) (sub1 m)))))
+
+(def =
+  (fn [n m]
+    (cond
+     (> n m) false
+     (> m n) false
+     :else true)))
+
+(def exp
+  (fn [n m]
+    (cond
+     (zero? m) 1
+     :else (x n (exp n (sub1 m))))))
